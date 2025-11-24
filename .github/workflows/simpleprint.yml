@@ -1,0 +1,36 @@
+name: Simple Print on Multiple OS
+
+on:
+  push:
+    branches:
+      - main  # Runs when changes are pushed to the main branch
+  pull_request:
+    branches:
+      - main  # Runs when a pull request targets the main branch
+
+jobs:
+  print-message:
+    runs-on: ${{ matrix.os }}  # Runs the job on multiple OS (from matrix)
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]  # Define OS matrix
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # Checks out the code from the repository
+
+      - name: Run print script
+        run: |
+          echo "Running on ${{ runner.os }}!"
+          # If you have a Python script, you can use it for each OS
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            # For Linux (Ubuntu), you could run a bash script or Python command
+            echo "Hello from Ubuntu!"
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            # For macOS, you can also run bash or Python command
+            echo "Hello from macOS!"
+          elif [[ "${{ runner.os }}" == "Windows" ]]; then
+            # For Windows, PowerShell commands are often used
+            echo "Hello from Windows!"
+          fi
+          # If you have a Python script, you could use:
+          # python -c "print('Hello from ${{ runner.os }}!')"
