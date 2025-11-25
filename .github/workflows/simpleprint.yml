@@ -1,23 +1,15 @@
-name: Simple Print
-
+name: Greeting on variable day
 on:
-  push:
-    branches:
-      - main  # Runs when changes are pushed to the main branch
-  pull_request:
-    branches:
-      - main  # Runs when a pull request targets the main branch
+  workflow_dispatch
+
+env:
+  DAY_OF_WEEK: Monday
 
 jobs:
-  print-message:
-    runs-on: ubuntu-latest  # Specifies the OS to run on, in this case Ubuntu
-
+  greeting_job:
+    runs-on: ubuntu-latest
+    env:
+      Greeting: Hello
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3  # Checks out the code from the repository
-
-      - name: Run Python script
-        run: |
-          echo "Hello from GitHub Actions!"  # Simple print using echo
-          # If you have a Python script, you can do something like this:
-          # python -c "print('Hello from Python!')"
+      - name: "Say Hello"
+        run: echo "$Greeting, today is $DAY_OF_WEEK!"
